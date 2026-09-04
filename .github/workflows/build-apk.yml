@@ -16,35 +16,47 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set up Java JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          api-levels: '34'
+          build-tools: '34.0.0'
+          target: android-34
+
+      - name: Set up Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.x'
+          channel: 'stable'
+          cache: true
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Install Buildozer
+      - name: Install Flet
         run: |
           python -m pip install --upgrade pip
-          pip install buildozer cython==0.29.36
+          pip install flet==0.86.5 paho-mqtt
 
-      - name: Cache Buildozer
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.buildozer
-            ~/.gradle
-            app/.buildozer
-          key: buildozer-${{ runner.os }}-${{ hashFiles('app/buildozer.spec') }}
-          restore-keys: buildozer-${{ runner.os }}-
-
-      - name: Build APK
+      - name: Build APK with Flet
         working-directory: app
         run: |
-          buildozer android debug
-          ls -la bin/
+          flutter --version
+          flet build apk --project-directory .
+          ls -la build/apk/debug/ 2>/dev/null || ls -la build/apk/ 2>/dev/null || echo "checking output..."
+          find build -name "*.apk" 2>/dev/null
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: jdq-app-apk
-          path: app/bin/*.apk
+          path: app/build/apk/debug/*.apk
           retention-days: 30
