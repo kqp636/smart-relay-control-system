@@ -29,17 +29,17 @@ jobs:
           build-tools: '34.0.0'
           target: android-34
 
-      - name: Set up Flutter SDK
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.24.x'
-          channel: 'stable'
-          cache: true
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+
+      - name: Cache Flet SDK
+        uses: actions/cache@v4
+        with:
+          path: ~/.flet
+          key: flet-sdk-${{ runner.os }}-${{ hashFiles('app/requirements.txt') }}
+          restore-keys: flet-sdk-${{ runner.os }}-
 
       - name: Install Flet
         run: |
@@ -49,8 +49,9 @@ jobs:
       - name: Build APK with Flet
         working-directory: app
         run: |
-          flutter --version
-          flet build apk
+          # flet 在找不到正确 Flutter 时会交互式询问,用 echo y 自动确认
+          # flet 会自己下载它需要的 Flutter SDK 版本
+          echo "y" | flet build apk
           echo "--- APK files ---"
           find build -name "*.apk" 2>/dev/null
           echo "--- app directory ---"
