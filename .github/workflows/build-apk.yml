@@ -50,13 +50,15 @@ jobs:
         working-directory: app
         run: |
           flutter --version
-          flet build apk --project-directory .
-          ls -la build/apk/debug/ 2>/dev/null || ls -la build/apk/ 2>/dev/null || echo "checking output..."
+          flet build apk
+          echo "--- APK files ---"
           find build -name "*.apk" 2>/dev/null
+          echo "--- app directory ---"
+          ls -la
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: jdq-app-apk
-          path: app/build/apk/debug/*.apk
+          path: app/build/apk/**/*.apk
           retention-days: 30
