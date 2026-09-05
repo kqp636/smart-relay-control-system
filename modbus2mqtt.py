@@ -9,7 +9,7 @@ from datetime import datetime
 import paho.mqtt.client as mqtt
 from pymodbus.client import ModbusTcpClient
 
-# ===== Modbus 配置 =====
+# ====== Modbus 配置 =====
 MODBUS_HOST = "192.168.20.59"
 MODBUS_PORT = 5502
 SLAVE_ID = 4              # 第四组，从站ID用组号
