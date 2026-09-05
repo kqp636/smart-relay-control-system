@@ -11,7 +11,7 @@ import time
 import threading
 from flask import Flask, request, jsonify, render_template_string
 
-# ============ MQTT服务器参数 ============
+# ============ MQTT服务器参数 ==========
 BROKER = "172.16.4.211"
 PORT = 9783
 USERNAME = "test"
@@ -19,7 +19,7 @@ PASSWORD = "123456"
 PRODUCT_ID = "jdq_kqp"
 DEVICE_ID = "jdqsb_kqp"
 GROUP_REG_ADDR = 4
-# ========================================
+# =========================================
 
 modbus_reg = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 lock = threading.Lock()
