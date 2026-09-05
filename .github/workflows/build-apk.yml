@@ -16,35 +16,50 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set up Java JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          api-levels: '34'
+          build-tools: '34.0.0'
+          target: android-34
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Install Buildozer
-        run: |
-          python -m pip install --upgrade pip
-          pip install buildozer cython==0.29.36
-
-      - name: Cache Buildozer
+      - name: Cache Flet SDK
         uses: actions/cache@v4
         with:
-          path: |
-            ~/.buildozer
-            ~/.gradle
-            app/.buildozer
-          key: buildozer-${{ runner.os }}-${{ hashFiles('app/buildozer.spec') }}
-          restore-keys: buildozer-${{ runner.os }}-
+          path: ~/.flet
+          key: flet-sdk-${{ runner.os }}-${{ hashFiles('app/requirements.txt') }}
+          restore-keys: flet-sdk-${{ runner.os }}-
 
-      - name: Build APK
+      - name: Install Flet
+        run: |
+          python -m pip install --upgrade pip
+          pip install flet==0.86.5 paho-mqtt
+
+      - name: Build APK with Flet
         working-directory: app
         run: |
-          buildozer android debug
-          ls -la bin/
+          # flet 在找不到正确 Flutter 时会交互式询问,用 echo y 自动确认
+          # flet 会自己下载它需要的 Flutter SDK 版本
+          echo "y" | flet build apk
+          echo "--- APK files ---"
+          find build -name "*.apk" 2>/dev/null
+          echo "--- app directory ---"
+          ls -la
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: jdq-app-apk
-          path: app/bin/*.apk
+          path: app/build/apk/**/*.apk
           retention-days: 30

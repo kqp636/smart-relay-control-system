@@ -1,0 +1,5 @@
+{ 
+ 
+    "timestamp":1788508929075,"functionId":"ctrl_relay",
+    "inputs":[{"name":"ch1","value":"1"}],
+"messageType":"INVOKE_FUNCTION","replyType":"INVOKE_FUNCTION_REPLY"}

@@ -258,8 +258,13 @@ def make_channel_card(idx, page):
     card = ft.Container(
         bgcolor=C_INPUT,
         border_radius=14,
-        border=ft.border.all(1, C_ON if state == 1 else C_BORDER),
-        padding=ft.padding.all(14),
+        border=ft.Border(
+            left=ft.BorderSide(1, C_ON if state == 1 else C_BORDER),
+            right=ft.BorderSide(1, C_ON if state == 1 else C_BORDER),
+            top=ft.BorderSide(1, C_ON if state == 1 else C_BORDER),
+            bottom=ft.BorderSide(1, C_ON if state == 1 else C_BORDER),
+        ),
+        padding=14,
         content=ft.Column(
             controls=[name_text, lamp, state_text, toggle_btn],
             alignment=ft.MainAxisAlignment.CENTER,
@@ -289,7 +294,7 @@ def main(page: ft.Page):
     page.title = "智能继电器管控"
     page.bgcolor = C_BG
     page.theme_mode = ft.ThemeMode.DARK
-    page.padding = ft.padding.all(16)
+    page.padding = 16
     page.scroll = ft.ScrollMode.AUTO
 
     # ===== 顶部标题 =====
@@ -334,8 +339,13 @@ def main(page: ft.Page):
     cfg_card = ft.Container(
         bgcolor=C_CARD,
         border_radius=16,
-        border=ft.border.all(1, C_BORDER),
-        padding=ft.padding.all(16),
+        border=ft.Border(
+            left=ft.BorderSide(1, C_BORDER),
+            right=ft.BorderSide(1, C_BORDER),
+            top=ft.BorderSide(1, C_BORDER),
+            bottom=ft.BorderSide(1, C_BORDER),
+        ),
+        padding=16,
         content=ft.Column(
             controls=[
                 ft.Row([
@@ -370,8 +380,13 @@ def main(page: ft.Page):
     ch_card = ft.Container(
         bgcolor=C_CARD,
         border_radius=16,
-        border=ft.border.all(1, C_BORDER),
-        padding=ft.padding.all(16),
+        border=ft.Border(
+            left=ft.BorderSide(1, C_BORDER),
+            right=ft.BorderSide(1, C_BORDER),
+            top=ft.BorderSide(1, C_BORDER),
+            bottom=ft.BorderSide(1, C_BORDER),
+        ),
+        padding=16,
         content=ft.Column(
             controls=[
                 ft.Row([
@@ -390,7 +405,7 @@ def main(page: ft.Page):
         height=260,
         spacing=2,
         auto_scroll=True,
-        padding=ft.padding.all(10),
+        padding=10,
     )
 
     clear_btn = ft.TextButton("清空", icon=ft.icons.DELETE_OUTLINE)
@@ -398,8 +413,13 @@ def main(page: ft.Page):
     log_card = ft.Container(
         bgcolor=C_CARD,
         border_radius=16,
-        border=ft.border.all(1, C_BORDER),
-        padding=ft.padding.all(16),
+        border=ft.Border(
+            left=ft.BorderSide(1, C_BORDER),
+            right=ft.BorderSide(1, C_BORDER),
+            top=ft.BorderSide(1, C_BORDER),
+            bottom=ft.BorderSide(1, C_BORDER),
+        ),
+        padding=16,
         content=ft.Column(
             controls=[
                 ft.Row([
