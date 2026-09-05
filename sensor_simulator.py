@@ -86,7 +86,7 @@ def handle_function_invoke(client, payload):
     client.publish(TOPIC_FUNC_REPLY, json.dumps(reply, ensure_ascii=False), qos=0)
     print(f"[回复平台] {json.dumps(reply, ensure_ascii=False)}")
 
-    # 2. 立刻上报最新属性  (老师要求的 Response)
+    # 2. 立刻上报最新属性 (老师要求的 Response)
     if changed:
         report_property(client, data)
 
